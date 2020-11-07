@@ -1,9 +1,10 @@
 from typing import Any, Union
+from abc import ABC, abstractmethod
+import json
+import os
+
 FileData = Union[str, bytes]
 Array = Union[list, dict]
-
-from abc import ABC, abstractmethod
-import json, os
 
 class IDataSource(ABC):
   def __init__(self, serializer: Serializer) -> None:
@@ -17,6 +18,7 @@ class IDataSource(ABC):
 class FileDS(IDataSource):
   def __init__(self, filePath: str, serializer: Serializer) -> None:
     IDataSource.__init__(self, serializer)
+    self.filePath = filePath
 
   def read(self) -> object:
     with open(self.filePath, 'r') as file:

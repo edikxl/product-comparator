@@ -1,8 +1,10 @@
-from abc import ABC, abstractmethod
 from typing import List
-from product import Price
+
+from abc import ABC, abstractmethod
 import requests
-from validators import url as isURL
+
+import validators
+from product import Price
 
 class IPriceChecker(ABC):
   @abstractmethod
@@ -31,7 +33,7 @@ class NovusWPC(AWebPriceChecker):
   @url.setter
   def url(self, value: str) -> None:
     assert isinstance(value, str)
-    assert isURL(value)
+    assert validators.isURL(value)
     self._url = value
   # -->
 
