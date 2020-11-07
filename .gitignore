@@ -1,0 +1,5 @@
+venv/
+/db.json
+/shugar.py
+test.py
+__pycache__/
