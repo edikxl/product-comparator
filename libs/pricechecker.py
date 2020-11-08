@@ -3,7 +3,7 @@ from typing import List
 from abc import ABC, abstractmethod
 import requests
 
-import validators
+from validator import Validator
 from product import Price
 
 class IPriceChecker(ABC):
@@ -29,12 +29,11 @@ class NovusWPC(AWebPriceChecker):
   @property
   def url(self) -> str:
     return self._url
-
   @url.setter
-  def url(self, value: str) -> None:
-    assert isinstance(value, str)
-    assert validators.isURL(value)
-    self._url = value
+  def url(self, url: str) -> None:
+    Validator.type(url, str)
+    Validators.URL(url)
+    self._url = url
   # -->
 
   def loadWebData(self, barcode: int) -> str:
@@ -43,7 +42,7 @@ class NovusWPC(AWebPriceChecker):
   @staticmethod
   def parsePrice(webData: str) -> Price:
     html = webData
-    # ... to be done
+    # ... TODO
     date = { "day": 0, "month": 0, "year": 0, "hours": 0, "minutes": 0, "seconds": 0 }
     value = 0
     return Price( date, 'Novus', value)

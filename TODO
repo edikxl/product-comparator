@@ -1,6 +1,23 @@
 Lab 3:
- ✔ Built-in Exceptions @done (20-11-07 22:20)
- ☐ Custom Exception 
- If you can't find where to add custom exceptions just convert some 'ValueError's into your owns in the Validator
-Other: 
- ☐ Create a lib for autocreating getters and setters
+  ✔ Built-in Exceptions @done (20-11-07 22:20)
+  ☐ Custom Exception @critical
+   If you can't find where to add custom exceptions just convert some 'ValueError's into your owns in the Validator
+Other:
+  validator.py:
+   ✔ Create funcs for leq, eq and so on instead of notNegative @done (20-11-08 13:31)
+    Created Validator.compare instead
+   ✔ .URL @done (20-11-08 13:42)
+   ✔ Tests @done (20-11-08 14:50)
+  db.py:
+   ☐ FIX: the bug about encoding in FileDS.read L102 @critical
+   ☐ Finish ProductNormalizer @high
+   ☐ FIX: Field set None value in DB L121 @low
+   ☐ Check that all getters and setters are written @low
+   ☐ Write tests @high
+    You'd better write them and only then code
+   ☐ Probably spread classes from this file into a few more @high
+    It becomes hard to find something here
+   ☐ Check all the typehints for an appropriate look @low
+  ☐ Create a lib for autocreating getters and setters @low
+   Successfully failed. setattr and getattr doesn't work as I thought. I'd better not touch this at all
+ 

@@ -1,7 +1,9 @@
 from typing import List
 from dataclasses import dataclass, field
 
-from validator import Validator
+from libs.validator import Validator
+
+URL = str
 
 @dataclass
 class Price:
@@ -33,7 +35,7 @@ class Price:
   @value.setter
   def value(self, value: float) -> None:
     Validator.type(value, float)
-    Validator.notNegative(value)
+    Validator.compare(value, '>=', 0)
     self._value = value
   # -->
 
@@ -41,6 +43,8 @@ class Price:
 class Product:
   barcode: int
   characteristics: dict
+  categories: List[str] = field(compare=False)
+  links: List[URL] = field(compare=False)
   prices: List[Price] = field(compare=False)
 
   # <!-- SETTERS | GETTERS
@@ -50,7 +54,7 @@ class Product:
   @barcode.setter
   def barcode(self, barcode: int) -> None:
     Validator.type(barcode, int)
-    Validator.notNegative(barcode)
+    Validator.compare(barcode, '>=', 0)
     self._barcode = barcode
 
   @property
@@ -60,6 +64,24 @@ class Product:
   def characteristics(self, characteristics: dict) -> None:
     Validator.type(characteristics, dict)
     self._characteristics = characteristics
+
+  @property
+  def categories(self) -> List[str]:
+    return self._categories
+  @categories.setter
+  def categories(self, categories: List[str]) -> None:
+    Validator.type(categories, list)
+    Validator.listOf(categories, str)
+    self._categories = categories
+
+  @property
+  def links(self) -> List[URL]:
+    return self._links
+  @links.setter
+  def links(self, links: List[URL]) -> None:
+    Validator.type(links, list)
+    map(Validator.URL, links)
+    self._links = links
 
   @property
   def prices(self) -> List[Price]:

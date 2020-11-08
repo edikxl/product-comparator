@@ -26,14 +26,25 @@ class TestValidator(unittest.TestCase):
 
     errorTest(self, Validator.keys, cases, ValueError)
 
-  def testNotNegative(self):
+  def testCompare(self):
     cases = [
-      Case(True, 5),
-      Case(True, 0),
-      Case(False, -5)
+      Case(True, 5, '>', 2),
+      Case(True, 5, '>=', 2),
+      Case(True, 5, '>=', 5),
+      Case(True, 5, '==', 5),
+      Case(True, 5, '!=', 10),
+      Case(True, 5, '<', 10),
+      Case(True, 5, '<=', 5),
+      Case(True, 5, '<=', 10),
+      Case(False, 2, '>', 5),
+      Case(False, 2, '>=', 5),
+      Case(False, 5, '==', 10),
+      Case(False, 5, '!=', 5),
+      Case(False, 10, '<', 5),
+      Case(False, 10, '<=', 5)
     ]
 
-    errorTest(self, Validator.notNegative, cases, ValueError)
+    errorTest(self, Validator.compare, cases, ValueError)
 
   def testListOf(self):
     cases = [
@@ -44,3 +55,13 @@ class TestValidator(unittest.TestCase):
     ]
 
     errorTest(self, Validator.listOf, cases, ValueError)
+
+  def testURL(self):
+    cases = [
+      Case(True, 'http://www.example.com'),
+      Case(True, 'https://www.google.com'),
+      Case(False, 'http//www.example.com'),
+      Case(False, 'www.example.com')
+    ]
+
+    errorTest(self, Validator.URL, cases, ValueError)
