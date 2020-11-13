@@ -1,0 +1,22 @@
+[
+  { // During gerenation of this JSON all the API Sources chould be included
+    "name": "Novus",
+    "logo-image-path": "assets/logos/sources/Novus.png",
+    "background-color": "228B22",
+    "font-color": "000000"
+  },
+
+  { // If has an API then can't be deleted from this list
+    "name": "Listex",
+    "logo-image-path": "assets/logos/sources/Listex.png",
+    "background-color": "800000",
+    "font-color": "000000"
+  },
+
+  { // Can be removed as has no API
+    "name": "АТБ",
+    "logo-image-path": null,
+    "background-color": "E6E6FA",
+    "font-color": "000000"
+  }
+]

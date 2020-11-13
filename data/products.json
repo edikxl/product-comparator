@@ -1,0 +1,48 @@
+[
+  {
+    "barcode": 4820226161653,
+    "collections": ["Йогурты", "Перекус"],
+    "data-history": [
+      { // Длительность свежести данных будет высчитыватся так: от даты отнимаем предыдущую дату. У самой свежей даты нужно указывать что цена не менялась с неё иначе будет выглядть как будто дата устарела. Так же если данные не изменились, то дату новую не нужно добавлять. Экономия места в DB  
+        "date": { "day": 30, "month": 10, "year": 2020, "hour": 2, "minute": 1, "second": 14 },
+        "source": "Listex",
+        "fields": {
+          "russian-name": "Бифидойогурт 1.2% питьевой без сахара Черника-Инжир Активіа п/бут 270г",
+          "ukrainian-name": "Біфідойогурт 1.2% питний без цукру Чорниця-Інжир Активіа п/пл 270г",
+          "short-russian-name": "Бифидойогурт Черника-Инжир Активіа 270г",
+          "short-ukrainian-name": "Біфідойогурт Чорниця-Інжир Активіа 270г",
+          "weight": 270,
+          "calories": 50,
+          "fat": 1.2,
+          "carbohydrates": 7.1,
+          "protein": 2.8,
+          "ingridients-russian": "Молоко нормализованное 79.8%, наполнитель \"инжир-черника\" 20% (сок грушевый концентрированный, вода питьевая, пюре инжира восстановленное 12.5%, черника 10%, волокна цитрусовые пищевые, ароматизаторы натуральные), закваски бактериальные, пробиотик ActiRegularis",
+          "ingridients-ukrainian": "Молоко нормалізоване 79.8%, наповнювач \"інжир-чорниця\" 20% (сік грушевий концентрований, вода питна, пюре інжиру відновлене 12.5%, чорниця 10%, волокна цитрусові харчові, ароматизатори натуральні), закваски бактеріальні, пробіотик ActiRegularis",
+          "ingridients-original": "Normalized milk 79.8%, filler \"fig-blueberry\" 20% (pear juice concentrated, drinking water, fig puree restored 12.5%, blueberries 10%, citrus fibers, natural flavors), bacterial leavens, probiotic ActiRegularis"
+        },
+        "mode": "API",
+        "url": "https://listex.info/product/aktivia-bifidoyogurt-pitniy-12-pet-270g-chornicya-inzhir-ua-4820226161653"
+      },
+
+      {
+        "date": { "day": 30, "month": 10, "year": 2020, "hour": 2, "minute": 1, "second": 14 },
+        "source": "Novus",
+        "fields": {
+          "price": 23.99
+        },
+        "mode": "API",
+        "url": "https://novus.zakaz.ua/ru/products/04820226161653/yogurt-activia-270g/"
+      },
+
+      {
+        "date": { "day": 30, "month": 10, "year": 2020, "hour": 2, "minute": 1, "second": 14 },
+        "source": "АТБ",
+        "fields": {
+          "price": 24.30
+        },
+        "mode": "manual",
+        "url": null
+      }
+    ]
+  }
+]
