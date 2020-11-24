@@ -1,5 +1,7 @@
 venv/
-/db.json
 /sugar.py
 temp.py
 __pycache__/
+.vim
+*.sublime-project
+*.sublime-workspace

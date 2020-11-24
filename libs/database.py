@@ -10,23 +10,21 @@ ID = Union[str, int]
 @dataclass
 class DataBase:
 
-  source: IDataSource
-  data: Array = None
+    source: IDataSource
+    data: Array = None
 
+    # <!-- GETTERS | SETTERS
+    # TODO
+    # -->
 
-  # <!-- GETTERS | SETTERS
-  # TODO
-  # -->
+    def load(self) -> None:
+        self.data = self.source.read()
 
+    def getField(self, id_: ID) -> Any:
+        return self.data[id_]
 
-  def load(self):
-    self.data = self.source.read()
+    def setField(self, id_: ID, value: Any) -> None:
+        self.data[id_] = value
 
-  def getField(self, id_: ID) -> Any:
-    return self.data[id_]
-
-  def setField(self, id_: ID, value: Any) -> None:
-    self.data[id_] = value
-
-  def save(self):
-    self.source.write(self.data)
+    def save(self) -> None:
+        self.source.write(self.data)
