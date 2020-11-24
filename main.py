@@ -1,4 +1,7 @@
+from typing import Any
+
 from kivy.app import App
+from kivy.uix.layout import Layout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
@@ -11,7 +14,7 @@ from libs.validator import Validator, ValidationError
 
 class ExceptionTest(BoxLayout):
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         Window.size = (300, 100)  # Delete later
 
         super(ExceptionTest, self).__init__(**kwargs)
@@ -38,7 +41,7 @@ class ExceptionTest(BoxLayout):
     # Check later
     # https://kivy.org/doc/stable/api-kivy.uix.textinput.html#filtering
     @staticmethod
-    def validatePrice(instance, value):
+    def validatePrice(instance: object, value: Any) -> None:
         try:
             Validator.digit(value)
         except ValidationError:
@@ -49,7 +52,7 @@ class ExceptionTest(BoxLayout):
 
 class MainApp(App):
 
-    def build(self):
+    def build(self) -> Layout:
         return ExceptionTest()
 
 
