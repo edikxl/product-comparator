@@ -1,24 +1,33 @@
-<Hbox@BoxLayout>:
-    orientation: 'horizontal'
+<Menu>:
 
-<ExceptionTest>:
-    orientation: 'vertical'
+    MDBottomNavigation:
 
-    Hbox:
-        Label:
-            text: 'Product name'
+        MDBottomNavigationItem:
+            name: 'products'
+            icon: 'cart'
+            
+            ProductsScreen:
 
-        TextInput:
-            multiline: False
+        MDBottomNavigationItem:
+            name: 'sources'
+            icon: 'store'
+            
+            SourcesScreen:
 
-    Hbox:
-        Label:
-            text: 'Price'
+        MDBottomNavigationItem:
+            name: 'add-product'
+            icon: 'cart-plus'
+            
+            AddProductScreen:
 
-        TextInput:
-            multiline: False
-            on_text: root.validatePrice(args[0], args[1])
+        MDBottomNavigationItem:
+            name: 'notifications'
+            icon: 'bell'
+            
+            NotificationsScreen:
 
-    Hbox:
-        Button:
-            text: 'Add product'
+        MDBottomNavigationItem:
+            name: 'settings'
+            icon: 'tune'
+            
+            SettingsScreen:

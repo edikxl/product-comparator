@@ -1,0 +1,18 @@
+#:import ZBarCam kivy_garden.zbarcam.ZBarCam
+<AddProductScreen>
+    orientation: 'vertical'
+
+    MDToolbar:
+        title: "Добавить товар"
+    
+    MDTabs:
+        ScanerTab:
+            text: 'Сканер'
+
+            #ZBarCam:
+            #    play: False
+
+        CustomTab:
+            text: 'Вручную'
+
+            ScrollView:

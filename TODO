@@ -22,3 +22,5 @@ Libs:
         ☐ FIX: encoding bug in FileDS.read() @critical 
     serializer.py:
         ☐ Finish ProductNormalizer @high 
+    AddProductScreen.[kv|py]:
+        ☐ Disable camera when leave this screen @high 

@@ -1,7 +1,10 @@
 venv/
+venv.bat
 /sugar.py
 temp.py
 __pycache__/
 .vim
 *.sublime-project
 *.sublime-workspace
+data/sources
+data/products

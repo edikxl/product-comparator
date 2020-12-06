@@ -1,32 +1,22 @@
-from typing import Any
-
-from kivy.app import App
-from kivy.uix.layout import Layout
+from kivymd.app import MDApp
 from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window  # Delete later
-Window.size = (300, 100)  # Delete later
 
-from libs.validator import Validator, ValidationError  # noqa: E402
-
-
-class ExceptionTest(BoxLayout):
-
-    @staticmethod
-    def validatePrice(instance: object, value: Any) -> None:
-        try:
-            Validator.digit(value)
-        except ValidationError:
-            instance.foreground_color = [1, 0, 0, 1]
-        else:
-            instance.foreground_color = [0, 0, 0, 1]
+from uix import (ProductsScreen, SourcesScreen, AddProductScreen,  # noqa: F401
+                NotificationsScreen, SettingsScreen)  # noqa: E128, F401
 
 
-class MainApp(App):
+class Menu(BoxLayout):
+    pass
 
-    def build(self) -> Layout:
+
+class MainApp(MDApp):
+
+    def build(self):
         self.title = 'Product Comporator'
-        return ExceptionTest()
+        return Menu()
 
 
 if __name__ == '__main__':
+    Window.size = (360, 600)  # Delete later
     MainApp().run()

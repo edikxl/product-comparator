@@ -1,0 +1,48 @@
+<SourcesScreen>
+
+    ScrollView:
+
+        GridLayout:
+            cols: 1
+            size_hint_y: None
+            height: self.minimum_height
+
+            MDToolbar:
+                title: "Магазины и базы товаров"
+
+            MDList:
+
+                OneLineAvatarIconListItem:
+                    divider: None
+                    text: 'NOVUS'
+
+                    ImageLeftWidget:
+                        source: 'data/sources/Novus.jpeg'
+
+                    CounterLabel:
+                        text: '10'
+
+                OneLineAvatarIconListItem:
+                    divider: None
+                    text: 'Сильпо'
+
+                    ImageLeftWidget:
+                        source: 'data/sources/Silpo.png'
+
+                    CounterLabel:
+                        text: '6'
+
+                OneLineAvatarIconListItem:
+                    divider: None
+                    text: 'Listex'
+
+                    ImageLeftWidget:
+                        source: 'data/sources/Listex.png'
+
+                    CounterLabel:
+                        text: '15'
+
+    MDFloatingActionButton:
+        icon: 'plus'
+        md_bg_color: app.theme_cls.primary_color
+        pos_hint: {'right': 0.95, 'y': 0.05}
