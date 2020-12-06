@@ -12,12 +12,10 @@ FileData = Union[str, bytes]
 
 class IEncoder(ABC):
 
-    @staticmethod
     @abstractmethod
     def encode(array: Array) -> FileData:
         pass
 
-    @staticmethod
     @abstractmethod
     def decode(fileData: FileData) -> Array:
         pass
@@ -25,23 +23,19 @@ class IEncoder(ABC):
 
 class JSONEncoder(IEncoder):
 
-    @staticmethod
-    def encode(array: Array) -> FileData:
+    def encode(self, array: Array) -> FileData:
         return json.dumps(array)
 
-    @staticmethod
-    def decode(fileData: FileData) -> Array:
+    def decode(self, fileData: FileData) -> Array:
         return json.loads(fileData)
 
 
 class INormalizer(ABC):
 
-    @staticmethod
     @abstractmethod
     def normalize(obj: object) -> Array:
         pass
 
-    @staticmethod
     @abstractmethod
     def denormalize(array: Array) -> object:
         pass
@@ -49,12 +43,10 @@ class INormalizer(ABC):
 
 class ProductNormalizer(INormalizer):
 
-    @staticmethod
-    def normalize(product: Product) -> Array:
+    def normalize(self, product: Product) -> Array:
         pass
 
-    @staticmethod
-    def denormalize(array: Array) -> Product:
+    def denormalize(self, array: Array) -> Product:
         pass
 
 

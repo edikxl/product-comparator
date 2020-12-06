@@ -1,0 +1,24 @@
+<Hbox@BoxLayout>:
+    orientation: 'horizontal'
+
+<ExceptionTest>:
+    orientation: 'vertical'
+
+    Hbox:
+        Label:
+            text: 'Product name'
+
+        TextInput:
+            multiline: False
+
+    Hbox:
+        Label:
+            text: 'Price'
+
+        TextInput:
+            multiline: False
+            on_text: root.validatePrice(args[0], args[1])
+
+    Hbox:
+        Button:
+            text: 'Add product'
