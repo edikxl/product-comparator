@@ -1,3 +1,37 @@
+<Notification>:
+    size_hint_y: None
+    height: content.height
+    type_swipe: "auto"
+    on_swipe_complete: self.onSwipeComplete()
+
+    MDCardSwipeLayerBox:
+
+    MDCardSwipeFrontBox:
+
+        ThreeLineAvatarIconListItem:
+            id: content
+            text: root.firstLine
+            secondary_text: root.secondLine
+            tertiary_text: root.thirdLine
+            _no_ripple_effect: True
+
+            ImageLeftWidget:
+                source: root.imageSource
+
+            NotificationTime:
+                text: root.time
+
+
 <NotificationsScreen>
-    MDLabel:
-        text: '4'
+    orientation: 'vertical'
+
+    MDToolbar:
+        title: "Уведомления"
+    
+    ScrollView:
+
+        GridLayout:
+            cols: 1
+            size_hint_y: None
+            height: self.minimum_height
+            id: notifications

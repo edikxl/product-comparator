@@ -12,7 +12,12 @@ class CustomTab(MDBoxLayout, MDTabsBase):
 
 
 class AddProductScreen(MDBoxLayout):
-    pass
+
+    def onEnter(self):
+        self.ids.camera.play = True
+
+    def onLeave(self):
+        self.ids.camera.play = False
 
 
 Builder.load_file('./uix/AddProductScreen/AddProductScreen.kv')

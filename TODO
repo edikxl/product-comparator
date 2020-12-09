@@ -10,7 +10,8 @@ Lab 4:
         Bridge in DS as Serializer, and in Serializer as Encoder and Decoder
 
 Lab 5:
-    ☐ GUI
+    ✔ GUI @done (20-12-09 18:26)
+    ✔ UML @done (20-12-09 18:26)
 
 Libs:
     API.py:

@@ -3,7 +3,12 @@ from kivy.lang import Builder
 
 
 class SettingsScreen(BoxLayout):
-    pass
+
+    def onEnter(self):
+        pass
+
+    def onLeave(self):
+        pass
 
 
 Builder.load_file('./uix/SettingsScreen/SettingsScreen.kv')

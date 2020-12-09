@@ -1,3 +1,15 @@
+<Source>
+    divider: None
+    text: ''
+
+    ImageLeftWidget:
+        id: image
+        source: ''
+
+    CounterLabel:
+        id: productCounter
+        text: ''
+
 <SourcesScreen>
 
     ScrollView:
@@ -11,36 +23,7 @@
                 title: "Магазины и базы товаров"
 
             MDList:
-
-                OneLineAvatarIconListItem:
-                    divider: None
-                    text: 'NOVUS'
-
-                    ImageLeftWidget:
-                        source: 'data/sources/Novus.jpeg'
-
-                    CounterLabel:
-                        text: '10'
-
-                OneLineAvatarIconListItem:
-                    divider: None
-                    text: 'Сильпо'
-
-                    ImageLeftWidget:
-                        source: 'data/sources/Silpo.png'
-
-                    CounterLabel:
-                        text: '6'
-
-                OneLineAvatarIconListItem:
-                    divider: None
-                    text: 'Listex'
-
-                    ImageLeftWidget:
-                        source: 'data/sources/Listex.png'
-
-                    CounterLabel:
-                        text: '15'
+                id: sourceList
 
     MDFloatingActionButton:
         icon: 'plus'

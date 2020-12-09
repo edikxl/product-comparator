@@ -5,29 +5,44 @@
         MDBottomNavigationItem:
             name: 'products'
             icon: 'cart'
+            on_enter: categoriesScreen.onEnter()
+            on_leave: categoriesScreen.onLeave()
             
-            ProductsScreen:
+            CategoriesScreen:
+                id: categoriesScreen
 
         MDBottomNavigationItem:
             name: 'sources'
             icon: 'store'
+            on_enter: sourceScreen.onEnter()
+            on_leave: sourceScreen.onLeave()
             
             SourcesScreen:
+                id: sourceScreen
 
         MDBottomNavigationItem:
             name: 'add-product'
             icon: 'cart-plus'
+            on_enter: addProductScreen.onEnter()
+            on_leave: addProductScreen.onLeave()
             
             AddProductScreen:
+                id: addProductScreen
 
         MDBottomNavigationItem:
             name: 'notifications'
             icon: 'bell'
+            on_enter: notificationsScreen.onEnter()
+            on_leave: notificationsScreen.onLeave()
             
             NotificationsScreen:
+                id: notificationsScreen
 
         MDBottomNavigationItem:
             name: 'settings'
             icon: 'tune'
+            on_enter: settingsScreen.onEnter()
+            on_leave: settingsScreen.onLeave()
             
             SettingsScreen:
+                id: settingsScreen
