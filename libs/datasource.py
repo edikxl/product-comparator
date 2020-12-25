@@ -42,12 +42,13 @@ class FileDS(ADataSource):
 
     def read(self) -> object:
         try:
-            with open(self.filePath, 'r') as file:
+            with open(self.filePath, 'a+') as file:
+                file.seek(0)
                 return self.serializer.deserialize(file.read())
 
         # FIX Something quite strange happening there with encodings
         except UnicodeDecodeError:
-            with open(self.filePath, 'rb') as file:
+            with open(self.filePath, 'rb+') as file:
                 fileData = file.read().decode('utf-8-sig').encode('utf8')
                 # print(fileData)
                 return self.serializer.deserialize(fileData)

@@ -1,0 +1,25 @@
+[
+  {
+    "name": "Novus",
+    "logo-image-path": "data/sources/Novus.png",
+    "API": "Novus",
+  },
+
+  {
+    "name": "Listex",
+    "logo-image-path": "data/sources/Listex.png",
+    "API": "Listex",
+  },
+
+  {
+    "name": "Сільпо",
+    "logo-image-path": "data/sources/Listex.png",
+    "API": "Silpo",
+  },
+
+  {
+    "name": "АТБ",
+    "logo-image-path": null,
+    "API": null,
+  }
+]

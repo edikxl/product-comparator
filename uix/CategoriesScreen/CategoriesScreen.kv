@@ -1,32 +1,34 @@
 <Category>
     divider: None
-    text: ''
+    text: root.name
 
     IconLeftWidget:
-        id: categoryIcon
-        icon: ''
+        icon: root.icon
 
     CounterLabel:
-        id: productCounter
-        text: ''
+        text: root.productsNumber
 
 <CategoriesScreen>:
 
-    ScrollView:
+    BoxLayout:
+        orientation: 'vertical'
 
-        GridLayout:
-            cols: 1
-            size_hint_y: None
-            height: self.minimum_height
+        MDToolbar:
+            title: 'Категории'
+            right_action_items: [['filter-variant', lambda x: root.filterButtonCallback()]]
 
-            MDToolbar:
-                title: "Категории"
-                # right_action_items: [['filter-variant', lambda x: root.filterButtonCallback()]]
+        ScrollView:
 
-            MDList:
-                id: categoryList
+            GridLayout:
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+
+                MDList:
+                    id: categoryList
 
     MDFloatingActionButton:
+        on_press: root.changeScreenToAddCategory()
         icon: 'plus'
         md_bg_color: app.theme_cls.primary_color
         pos_hint: {'right': 0.95, 'y': 0.05}

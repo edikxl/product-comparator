@@ -23,13 +23,13 @@ class NotificationTime(IRightBodyTouch, MDLabel):
 
 class NotificationsScreen(BoxLayout):
 
-    def onEnter(self):
+    def on_pre_enter(self):
         self.clearNotifications()
         self.addNotification('Бифидойогурт Черника-Инжир Активіа 270г', '24.80грн. -> 22.50грн.', 'Цена упала на 2.30грн.', '17:06', 'data/products/test.jpg')
         self.addNotification('Бифидойогурт Черника-Инжир Активіа 270г', '24.80грн. -> 22.50грн.', 'Цена упала на 2.30грн.', '16:40', 'data/products/test.jpg')
         self.addNotification('Бифидойогурт Черника-Инжир Активіа 270г', '24.80грн. -> 22.50грн.', 'Цена упала на 2.30грн.', '12:36', 'data/products/test.jpg')
 
-    def onLeave(self):
+    def on_pre_leave(self):
         self.clearNotifications()
 
     def clearNotifications(self):
@@ -37,6 +37,7 @@ class NotificationsScreen(BoxLayout):
 
     def addNotification(self, firstLine, secondLine, thirdLine, time, imageSource):
         notification = Notification()
+
         notification.firstLine = firstLine
         notification.secondLine = secondLine
         notification.thirdLine = thirdLine

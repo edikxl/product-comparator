@@ -1,10 +1,10 @@
-from typing import Union
+from typing import Union, List
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
 import json
 
 from libs.validator import Validator
-from libs.data import Product
+from libs.data import Product, Date, DataRecord, Source, Category
 
 Array = Union[list, dict, set, tuple]
 FileData = Union[str, bytes]
@@ -13,41 +13,156 @@ FileData = Union[str, bytes]
 class IEncoder(ABC):
 
     @abstractmethod
-    def encode(array: Array) -> FileData:
+    def encode(self, array: Array) -> FileData:
         pass
 
     @abstractmethod
-    def decode(fileData: FileData) -> Array:
+    def decode(self, fileData: FileData) -> Array:
         pass
 
 
 class JSONEncoder(IEncoder):
 
+    def __init__(self, defaultType: type):
+        self._defaultType = defaultType
+
     def encode(self, array: Array) -> FileData:
         return json.dumps(array)
 
     def decode(self, fileData: FileData) -> Array:
+        if not fileData:
+            return self._defaultType()
+
         return json.loads(fileData)
 
 
 class INormalizer(ABC):
 
     @abstractmethod
-    def normalize(obj: object) -> Array:
+    def normalize(self, obj: object) -> Array:
         pass
 
     @abstractmethod
-    def denormalize(array: Array) -> object:
+    def denormalize(self, array: Array) -> object:
         pass
 
 
-class ProductNormalizer(INormalizer):
+class ProductsNormalizer(INormalizer):
 
-    def normalize(self, product: Product) -> Array:
-        pass
+    def normalize(self, products: List[Product]) -> list:
+        array = []
 
-    def denormalize(self, array: Array) -> Product:
-        pass
+        for product in products:
+            barcode = product.barcode
+            imagePath = product.imagePath
+            categories = product.categories
+            dataHistory = []
+            for dataRecord in product.dataHistory:
+                date = dataRecord.date
+
+                dataHistory.append({
+                    'date': {
+                        'year': date.year,
+                        'month': date.month,
+                        'day': date.day,
+                        'hour': date.hour,
+                        'minute': date.minute,
+                        'second': date.second
+                    },
+                    'source': dataRecord.source,
+                    'fields': dataRecord.fields,
+                    'mode': dataRecord.mode,
+                    'URL': dataRecord.URL
+                })
+
+            array.append({
+                'barcode': barcode,
+                'imagePath': imagePath,
+                'categories': categories,
+                'dataHistory': dataHistory
+            })
+
+        return array
+
+    def denormalize(self, array: list) -> List[Product]:
+        products = []
+
+        for product in array:
+            barcode = product['barcode']
+            imagePath = product['imagePath']
+            categories = product['categories']
+            dataHistory = product['dataHistory']
+            for position, dataRecord in enumerate(dataHistory):
+                date = dataRecord['date']
+                year = date['year']
+                month = date['month']
+                day = date['day']
+                hour = date['hour']
+                minute = date['minute']
+                second = date['second']
+
+                date = Date(year, month, day, hour, minute, second)
+                source = dataRecord['source']
+                fields = dataRecord['fields']
+                mode = dataRecord['mode']
+                URL = dataRecord['URL']
+
+                dataHistory[position] = DataRecord(date, source, fields, mode, URL)
+
+            products.append(Product(barcode, imagePath, categories, dataHistory))
+
+        return products
+
+
+class SourcesNormalizer(INormalizer):
+
+    def normalize(self, sources: List[Source]) -> list:
+        raise NotImplementedError
+
+    def denormalize(self, array: list) -> List[Source]:
+        sources = []
+
+        for source in array:
+            name = source['name']
+            imagePath = source['image-path']
+
+            sources.append(Source(name, imagePath))
+
+        return sources
+
+
+class CategoriesNormalizer(INormalizer):
+
+    def normalize(self, categories: List[Category]) -> list:
+        array = []
+
+        for category in categories:
+            array.append({
+                'name': category.name,
+                'icon': category.icon,
+            })
+
+        return array
+
+    def denormalize(self, array: list) -> List[Category]:
+        categories = []
+
+        for category in array:
+            name = category['name']
+            icon = category['icon']
+
+            categories.append(Category(name, icon))
+
+        return categories
+
+
+class ListNormalizer(INormalizer):
+
+    def normalize(self, list_: list) -> list:
+        return list_
+
+    def denormalize(self, list_: list) -> list:
+        return list_
 
 
 @dataclass
@@ -77,7 +192,7 @@ class Serializer:
     # -->
 
     def serialize(self, obj: object) -> FileData:
-        self.encoder.encode(self.normalizer.normalize(obj))
+        return self.encoder.encode(self.normalizer.normalize(obj))
 
     def deserialize(self, fileData: FileData) -> object:
-        self.normalizer.denormalize(self.encoder.decode(fileData))
+        return self.normalizer.denormalize(self.encoder.decode(fileData))

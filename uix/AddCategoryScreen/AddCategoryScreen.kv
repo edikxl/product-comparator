@@ -1,0 +1,49 @@
+#:import images_path kivymd.images_path
+
+
+<CustomOneLineIconListItem>:
+
+    IconLeftWidget:
+        icon: root.icon
+
+
+<AddCategoryScreen>
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        MDToolbar:
+            title: 'Новая категория'
+            left_action_items: [['arrow-left', lambda _: root.onBack()]]
+            right_action_items: [['check', lambda _: root.onSave()]]
+
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: dp(10)
+            padding: dp(20)
+
+            MDIconButton:
+                icon: iconField.text
+                pos_hint: {'center_x': 0.5}
+
+            MDTextField:
+                id: nameField
+                hint_text: 'Название'
+                
+            MDTextField:
+                id: iconField
+                hint_text: 'Иконка (на английском)'
+                on_text: root.setListOfIcons(self.text, True)
+
+            RecycleView:
+                id: rv
+                key_viewclass: 'viewclass'
+                key_size: 'height'
+
+                RecycleBoxLayout:
+                    padding: dp(10)
+                    default_size: None, dp(48)
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+                    orientation: 'vertical'

@@ -1,94 +1,134 @@
-from typing import Any
-from dataclasses import dataclass
+from abc import ABC, abstractmethod
+import datetime
 
 import requests
+from bs4 import BeautifulSoup
+
+from libs.data import Product, DataRecord, Date
 
 
-class RequestToNonExistentMethod(Exception):
+class API(ABC):
 
-    def __init__(self, APIName: str, method: str) -> None:
-        super().__init__(f'API {APIName} has no method {method}')
-
-
-@dataclass
-class API:
-
-    name: str
-
-    # TODO GET SET name
-
-    def getMethods(self) -> list:
-        methods = []
-
-        for attribute in dir(self):
-            if not attribute.startswith('__') and callable(getattr(self, attribute)):
-                methods.append(attribute)
-
-        return methods
-
-    def request(self, methodName: str, *args: list, **kwargs: dict) -> Any:
-        return getattr(self, methodName)(self, *args, **kwargs)
+    @abstractmethod
+    def getFields(self) -> dict:
+        pass
 
 
-@dataclass
 class NovusAPI(API):
 
-    _url: str = 'https://novus.zakaz.ua/ru/products/'
+    URL = 'https://novus.zakaz.ua/ru/products/'
 
-    def price(self, barcode: int) -> dict:
-        response = {'price': None}
+    def getFields(self, barcode: str):
+        URL = self.URL + str(barcode)
+        html = requests.get(URL).text
+        soup = BeautifulSoup(html, 'html.parser')
 
-        html = requests.get(self.url + barcode).text
-        # ... TODO parsing price
+        fields = {
+            'URL': URL,
+            'imageURL': self.parseImageURL(soup),
+            'name': self.parseName(soup),
+            'price': self.parsePrice(soup),
+            'weight': self.parseWeight(soup),
+            'ingridients': self.parseIngridients(soup),
+        }
 
-        return response
+        return fields
+
+    def parseImageURL(self, soup: BeautifulSoup) -> str:
+        return soup.select_one('.ZooomableImageSwitcher__smallImg')['src']
+
+    def parseName(self, soup: BeautifulSoup) -> str:
+        return soup.select_one('.big-product-card__title').text
+
+    def parsePrice(self, soup: BeautifulSoup) -> float:
+        return soup.select_one('.Price__value_title').text
+
+    def parseWeight(self, soup: BeautifulSoup) -> str:
+        return soup.select_one('.big-product-card__amount').text
+
+    def parseIngridients(self, soup: BeautifulSoup) -> str:
+        wrapper = soup.select_one('.big-product-card__ingredients')
+        innerContent = wrapper.select_one('.big-product-card__long-text')
+
+        ingridients = innerContent.text
+
+        return ingridients
 
 
 class SilpoAPI(API):
 
-    def price(self, barcode: int) -> dict:
-        pass
+    getPriceURL = ''
+
+    def getFields(self, barcode: str):
+        raise NotImplementedError
 
 
 class ListexAPI(API):
 
-    def product(self, barcode: int) -> dict:
-        pass
+    def getFields(self, barcode: str) -> dict:
+        return self.product(barcode)  # ?
+
+    def product(self, barcode: str) -> dict:
+        raise NotImplementedError
 
     def suggestions(self, brandName: str) -> dict:
-        pass
+        raise NotImplementedError
 
 
 class APIs:
 
     def __init__(self) -> None:
-        self._APIs = [NovusAPI, SilpoAPI, ListexAPI]
+        self._APIs = {
+            'Novus': NovusAPI(),
+            # 'Silpo': SilpoAPI(),
+            # 'Listex': ListexAPI(),
+        }
 
-    def getAPIByName(self, APIName: str) -> API:
-        for API in self._APIs:
-            if API.name == APIName:
-                return API
+    def get(self, name: str) -> API:
+        return self._APIs[name]
 
-        return None
+    def getAll(self) -> dict:
+        return self._APIs.copy()  # TODO WARNING POTENTIAL DEEP BUG
 
-    def request(self, APIName: str, method: str, *args: tuple) -> Any:
-        API = self._APIs[APIName]
-        if method in API.getMethods():
-            return API.request(method, args)
+    def getFields(self, barcode: int) -> dict:
+        fields = {}
 
-        raise RequestToNonExistentMethod(APIName, method)
+        for APIName, API in self._APIs.items():
+            fields[APIName] = API.getFields(barcode)
 
-    def requestAll(self, method: str, *args: tuple) -> list:
-        responses = []
-        for API in self._APIs:
-            responses.append(self.request(method, args, API.name))
+        return fields
 
-        return responses
+    def getProductFromBarcode(self, barcode: int) -> dict:
+        allFields = self.getFields(barcode)
+
+        imageURL = allFields['Novus']['imageURL']
+        imagePath = 'data/products/' + barcode + '.jpg'  # TODO CHECK IF DATA FORMAT IS NOT JPG
+        # https://www.tutorialspoint.com/downloading-files-from-web-using-python
+        with open(imagePath, 'wb') as imageFile:
+            imageFile.write(requests.get(imageURL).content)
+
+        categories = []
+        dataHistory = []
+
+        for APIFieldsName, APIFields in allFields.items():
+            today = datetime.date.today()
+            now = datetime.datetime.now()
+            date = Date(today.year, today.month, today.day, now.hour, now.minute, now.second)
+
+            source = APIFieldsName
+            fields = APIFields
+            mode = 'API'
+            URL = APIFields['URL']
+
+            dataHistory.insert(0, DataRecord(date, source, fields, mode, URL))
+
+        return Product(barcode, imagePath, categories, dataHistory)
 
 
-""" USAGE EXAMPLES
-APIs.request('Novus', 'price', 4820226161653)
-APIs.requestAll('price', 4820226161653)
-APIs.request('Listex', 'product', 4820226161653)
-APIs.request('Listex', 'suggestions', 'Біфідойогурт Чорниця-Інжир Активіа 270г')
-"""
+'''
+APIs = APIs()
+
+APIs.get('Novus').getFields()
+APIs.get('Novus').price(4820226161653)
+APIs.get('Listex').suggestions('Йогурт')
+'''

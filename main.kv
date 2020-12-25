@@ -1,48 +1,50 @@
 <Menu>:
 
-    MDBottomNavigation:
+    BoxLayout:
 
-        MDBottomNavigationItem:
-            name: 'products'
-            icon: 'cart'
-            on_enter: categoriesScreen.onEnter()
-            on_leave: categoriesScreen.onLeave()
-            
-            CategoriesScreen:
-                id: categoriesScreen
+        MDBottomNavigation:
 
-        MDBottomNavigationItem:
-            name: 'sources'
-            icon: 'store'
-            on_enter: sourceScreen.onEnter()
-            on_leave: sourceScreen.onLeave()
-            
-            SourcesScreen:
-                id: sourceScreen
+            MDBottomNavigationItem:
+                name: 'products'
+                icon: 'cart'
+                on_pre_enter: categoriesScreen.on_pre_enter()
+                on_pre_leave: categoriesScreen.on_pre_leave()
+                
+                CategoriesScreen:
+                    id: categoriesScreen
 
-        MDBottomNavigationItem:
-            name: 'add-product'
-            icon: 'cart-plus'
-            on_enter: addProductScreen.onEnter()
-            on_leave: addProductScreen.onLeave()
-            
-            AddProductScreen:
-                id: addProductScreen
+            MDBottomNavigationItem:
+                name: 'sources'
+                icon: 'store'
+                on_pre_enter: sourceScreen.on_pre_enter()
+                on_pre_leave: sourceScreen.on_pre_leave()
+                
+                SourcesScreen:
+                    id: sourceScreen
 
-        MDBottomNavigationItem:
-            name: 'notifications'
-            icon: 'bell'
-            on_enter: notificationsScreen.onEnter()
-            on_leave: notificationsScreen.onLeave()
-            
-            NotificationsScreen:
-                id: notificationsScreen
+            MDBottomNavigationItem:
+                name: 'add-product'
+                icon: 'cart-plus'
+                on_pre_enter: addProductScreen.on_pre_enter()
+                on_pre_leave: addProductScreen.on_pre_leave()
+                
+                AddProductScreen:
+                    id: addProductScreen
 
-        MDBottomNavigationItem:
-            name: 'settings'
-            icon: 'tune'
-            on_enter: settingsScreen.onEnter()
-            on_leave: settingsScreen.onLeave()
-            
-            SettingsScreen:
-                id: settingsScreen
+            MDBottomNavigationItem:
+                name: 'notifications'
+                icon: 'bell'
+                on_pre_enter: notificationsScreen.on_pre_enter()
+                on_pre_leave: notificationsScreen.on_pre_leave()
+                
+                NotificationsScreen:
+                    id: notificationsScreen
+
+            MDBottomNavigationItem:
+                name: 'settings'
+                icon: 'tune'
+                on_pre_enter: settingsScreen.on_pre_enter()
+                on_pre_leave: settingsScreen.on_pre_leave()
+                
+                SettingsScreen:
+                    id: settingsScreen

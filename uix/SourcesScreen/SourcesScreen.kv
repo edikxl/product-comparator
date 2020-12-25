@@ -1,31 +1,57 @@
+<ImageField>
+    size_hint: None, None
+    size: dp(56), dp(56)
+    pos_hint: {'center_x': .5}
+    source: root.parent.imagePath
+    on_release: root.parent.chooseImage()
+
+
+<AddSourceDialogContent>
+    orientation: 'vertical'
+    spacing: '12dp'
+    size_hint_y: None
+    height: '120dp'
+
+    ImageField:
+        id: imageField
+        icon: 'add-photo-alternate'
+
+    MDTextField:
+        hint_text: 'Название'
+        text: root.sourceName
+
+
 <Source>
     divider: None
-    text: ''
+    text: root.name
 
     ImageLeftWidget:
-        id: image
-        source: ''
+        source: root.imagePath
 
     CounterLabel:
-        id: productCounter
-        text: ''
+        text: root.productsNumber
 
 <SourcesScreen>
 
-    ScrollView:
+    BoxLayout:
+        orientation: 'vertical'
 
-        GridLayout:
-            cols: 1
-            size_hint_y: None
-            height: self.minimum_height
+        MDToolbar:
+            title: 'Магазины и базы товаров'
+            right_action_items: [['filter-variant', lambda x: root.filterButtonCallback()]]
 
-            MDToolbar:
-                title: "Магазины и базы товаров"
+        ScrollView:
 
-            MDList:
-                id: sourceList
+            GridLayout:
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+
+                MDList:
+                    id: sourceList
 
     MDFloatingActionButton:
+        on_press: root.openDialogToAddSource()
         icon: 'plus'
         md_bg_color: app.theme_cls.primary_color
         pos_hint: {'right': 0.95, 'y': 0.05}

@@ -1,4 +1,6 @@
 #:import ZBarCam kivy_garden.zbarcam.ZBarCam
+
+
 <AddProductScreen>
     orientation: 'vertical'
 
@@ -9,9 +11,9 @@
         ScanerTab:
             text: 'Сканер'
 
-            Camera:
-                id: camera
-                play: False
+            #Camera:
+            #    id: camera
+            #    play: False
             #ZBarCam:
             #    play: False
 
@@ -19,3 +21,19 @@
             text: 'Вручную'
 
             ScrollView:
+
+                GridLayout:
+                    cols: 1
+                    size_hint_y: None
+                    height: self.minimum_height
+                    spacing: dp(10)
+                    padding: dp(20)
+
+                    MDTextField:
+                        id: barcodeInputField
+                        hint_text: 'Barcode'
+
+                    MDRectangleFlatButton:
+                        text: 'Добавить'
+                        pos_hint: {'x': 0.5} # TODO FIX DOESN'T WORK
+                        on_press: root.addProductByBarcode(barcodeInputField.text)

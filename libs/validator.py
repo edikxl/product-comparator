@@ -46,7 +46,7 @@ class Validator:
     @staticmethod
     def listOf(list_: list, object_: object) -> None:
         if not all([isinstance(element, object_) for element in list_]):
-            raise ValueError(f'List containts not only objects of the class {object_.__name__}')
+            raise ValueError(f'List containts not only objects of the class {object_.__name__}\nList = {list_}')
 
     @staticmethod
     def URL(cls, url: str) -> None:

@@ -4,10 +4,10 @@ from kivy.lang import Builder
 
 class SettingsScreen(BoxLayout):
 
-    def onEnter(self):
+    def on_pre_enter(self):
         pass
 
-    def onLeave(self):
+    def on_pre_leave(self):
         pass
 
 
